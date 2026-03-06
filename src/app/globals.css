@@ -3,31 +3,174 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --color-bg: #0d1117;
+  --color-surface: #161b22;
+  --color-border: #30363d;
+  --color-text: #e6edf3;
+  --color-muted: #8b949e;
+  --color-request: #58a6ff;
+  --color-response: #3fb950;
+  --color-event: #f0883e;
+  --color-accent: #bc8cff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+::selection {
+  background: rgba(88, 166, 255, 0.3);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
+}
+
+.code-block {
+  background: #0d1117;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  -webkit-overflow-scrolling: touch;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 1rem;
+}
+
+.json-key { color: #79c0ff; }
+.json-string { color: #a5d6ff; }
+.json-number { color: #79c0ff; }
+.json-boolean { color: #ff7b72; }
+.json-null { color: #ff7b72; }
+.json-bracket { color: #8b949e; }
+
+.kt-keyword { color: #ff7b72; }
+.kt-function { color: #d2a8ff; }
+.kt-string { color: #a5d6ff; }
+.kt-number { color: #79c0ff; }
+.kt-type { color: #ffa657; }
+.kt-comment { color: #8b949e; font-style: italic; }
+.kt-annotation { color: #f0883e; }
+
+.badge-request {
+  background: rgba(88, 166, 255, 0.15);
+  color: #58a6ff;
+  border: 1px solid rgba(88, 166, 255, 0.3);
+}
+
+.badge-response {
+  background: rgba(63, 185, 80, 0.15);
+  color: #3fb950;
+  border: 1px solid rgba(63, 185, 80, 0.3);
+}
+
+.badge-event {
+  background: rgba(240, 136, 62, 0.15);
+  color: #f0883e;
+  border: 1px solid rgba(240, 136, 62, 0.3);
+}
+
+@keyframes flowDot {
+  0% { transform: translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(var(--flow-distance, 200px)); opacity: 0; }
+}
+
+@keyframes flowDotReverse {
+  0% { transform: translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(calc(-1 * var(--flow-distance, 200px))); opacity: 0; }
+}
+
+.flow-dot {
+  animation: flowDot 2s ease-in-out infinite;
+}
+
+.flow-dot-reverse {
+  animation: flowDotReverse 2s ease-in-out infinite;
+}
+
+.section-animate {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.section-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+}
+
+.collapsible-content.expanded {
+  max-height: 8000px;
+}
+
+.glow-request { box-shadow: 0 0 20px rgba(88, 166, 255, 0.15); }
+.glow-response { box-shadow: 0 0 20px rgba(63, 185, 80, 0.15); }
+.glow-event { box-shadow: 0 0 20px rgba(240, 136, 62, 0.15); }
+
+.hover-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+@media (pointer: coarse) {
+  button, a, [role="button"], summary {
+    min-height: 44px;
+    min-width: 44px;
   }
+}
+
+@keyframes msgSlideRight {
+  0% { transform: translateX(-10px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+.msg-slide-in {
+  animation: msgSlideRight 0.4s ease-out forwards;
+}
+
+@keyframes timelinePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(88,166,255,0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(88,166,255,0); }
+}
+
+.timeline-dot-pulse {
+  animation: timelinePulse 2s ease-in-out infinite;
 }

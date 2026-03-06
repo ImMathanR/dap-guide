@@ -1,0 +1,8 @@
+services:
+  dap-guide:
+    build: .
+    ports:
+      - "127.0.0.1:3012:3012"
+    environment:
+      - PORT=3012
+    restart: unless-stopped
